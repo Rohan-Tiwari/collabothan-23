@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Email Sending Page</title>
+</head>
+<body>
+    <h1>Compose Email</h1>
+    <form id="email-form">
+        <label for="to">To:</label>
+        <input type="text" id="to" required><br><br>
+        
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" required><br><br>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" required></textarea><br><br>
+        
+        <button type="submit">Send Email</button>
+    </form>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const emailForm = document.getElementById('email-form');
+            emailForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const to = document.getElementById('to').value;
+                const subject = 'Voucher to redeem points';//document.getElementById('subject').value;
+                const message = 'AUTO!90129VoU';//document.getElementById('message').value;
+                
+                // You should make an HTTP request to your server here to send the email.
+                // You can use the Fetch API to do this.
+                
+                // Example:
+                fetch('/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        to: to,
+                        subject: subject,
+                        message: message,
+                    }),
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Email sent successfully!');
+                        // You can clear the form fields or take any other actions.
+                    } else {
+                        alert('Email sending failed.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Email sending failed.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
