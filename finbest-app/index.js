@@ -2,6 +2,15 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const cors=require("cors");
+    const corsOptions ={
+    origin:'*', 
+    credentials:true,            
+    optionSuccessStatus:200,
+    }
+
+app.use(cors(corsOptions))
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -36,7 +45,7 @@ app.post('/send-email', (req, res) => {
   
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error('Email sending failed:', error);
+        console.log('Email sending failed:', error);
         res.status(500).json({ message: 'Email sending failed' });
       } else {
         console.log('Email sent:', info.response);
@@ -44,4 +53,5 @@ app.post('/send-email', (req, res) => {
       }
     });
   });
-  
+
+    
